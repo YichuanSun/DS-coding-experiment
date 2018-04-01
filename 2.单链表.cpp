@@ -7,12 +7,12 @@ typedef struct LinkTable{
 	PtoLT Next;
 }LT;
 
-void CreatLinkTable(PtoLT &List);
-void InsertElement(PtoLT &head);
-void DeleteElement(PtoLT &head);
-void SearchbyKey(PtoLT head);
-void Print(PtoLT head);
-void destroyLinkTable(PtoLT &head);
+void CreatLinkTable(PtoLT &List);			//创建单链表 
+void InsertElement(PtoLT &head);			//头插法插入n个元素。注：我不清楚头插法头指针存不存放数据，为了便于实现，我没有按惯例让头指针数据为空，而是用它存放了数据，序号为0 
+void DeleteElement(PtoLT &head);			//删除第i个元素 
+void SearchbyKey(PtoLT head);				//按关键字查找单链表 
+void Print(PtoLT head);						//计算表长并输出单链表 
+void DestroyLinkTable(PtoLT &head);			//销毁单链表 
 
 int main()	{
 	int n=1;
@@ -30,15 +30,15 @@ int main()	{
 		printf("请输入你的选择：	");
 		scanf("%d",&n);
 		switch(n)	{
-			case 1:	{
+			case 1:	{ 								//创建一个新的单链表 
 				List=(PtoLT)malloc(sizeof(LT));
 				CreatLinkTable(List);break;
 			}
-			case 2:	InsertElement(List);break;
-			case 3:	DeleteElement(List);break;
-			case 4:	SearchbyKey(List);break;
-			case 5:	Print(List);break;
-			case 6:	destroyLinkTable(List);break;
+			case 2:	InsertElement(List);break;		//插入元素 
+			case 3:	DeleteElement(List);break;		//删除元素 
+			case 4:	SearchbyKey(List);break;		//查找元素 
+			case 5:	Print(List);break;				//打印表长和所有元素值 
+			case 6:	DestroyLinkTable(List);break;	//销毁线性表 
 			default:	printf("请重新输入!\n");goto point;
 		}
 	}
@@ -111,7 +111,7 @@ void Print(PtoLT head)	{
 	printf("单链表长度：%d\n",len);
 }
 
-void destroyLinkTable(PtoLT &head)	{
+void DestroyLinkTable(PtoLT &head)	{
 	while (head!=NULL)	{
 		PtoLT T0=head;
 		head=head->Next;
