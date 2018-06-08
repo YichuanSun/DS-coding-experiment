@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+int cnt=1;
 struct BinaryNode
 {
 	BinaryNode* _left;
@@ -47,7 +48,13 @@ BinaryNode* GetLastCommonAncestor(BinaryNode* root, BinaryNode* node1, BinaryNod
 	else
 		return NULL;
 }
-
+BinaryNode* binaryTreeSearch(BinaryNode* root,int m)    {
+    if (root==nullptr)  return nullptr;
+    if (root->_value==m)    return root;
+    else cout<<root->_value<<'\t'<<cnt++<<endl;
+    binaryTreeSearch(root->_right,m);
+    binaryTreeSearch(root->_left,m);
+}
 int main()
 {
     int n,temp;
@@ -64,7 +71,6 @@ int main()
 		{
 			top = q.front();
 			cin>>temp;
-
 			if (cur == top->_left)
 			{
 				cur = new BinaryNode(temp);
@@ -81,10 +87,13 @@ int main()
 			q.push(cur);
 		}
 	}
-	cin>>
-	BinaryNode* node1 = root->_left->_left;
-	BinaryNode* node2 = root->_right->_left;
-	BinaryNode* ancestor = GetLastCommonAncestor(root, node1, node2);
+	int m1,m2;
+	cin>>m1>>m2;
+	BinaryNode* node1 = binaryTreeSearch(root,m1);
+	cout<<endl;
+	BinaryNode* node2 = binaryTreeSearch(root,m2);
+	cout<<"node1 and node2 are"<<node1->_value<<"\t"<<node2->_value;
+    BinaryNode* ancestor = GetLastCommonAncestor(root, node1, node2);
 	if (ancestor)
 		cout << ancestor->_value << endl;
 	else
