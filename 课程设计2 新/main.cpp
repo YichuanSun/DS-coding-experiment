@@ -48,7 +48,7 @@ BinaryNode* GetLastCommonAncestor(BinaryNode* root, BinaryNode* node1, BinaryNod
 		return NULL;
 }
 
-void Test()
+int main()
 {
     int n,temp;
     cin>>n;
@@ -64,6 +64,7 @@ void Test()
 		{
 			top = q.front();
 			cin>>temp;
+
 			if (cur == top->_left)
 			{
 				cur = new BinaryNode(temp);
@@ -88,11 +89,4 @@ void Test()
 		cout << ancestor->_value << endl;
 	else
 		cout << "没有公共祖先" << endl;
-}
-
-int main()
-{
-    Test();
-    int n;
-    return 0;
 }
