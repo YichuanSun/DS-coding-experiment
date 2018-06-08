@@ -21,51 +21,68 @@ int Hight(BinaryNode* root, BinaryNode* node)
 
 	return len;
 }
-BinaryNode * GetLastCommonAncestor(BinaryNode * root, BinaryNode * node1, BinaryNode * node2)
+BinaryNode* GetLastCommonAncestor(BinaryNode* root, BinaryNode* node1, BinaryNode* node2)
 {
-	BinaryNode * temp;
-	while (node1 != NULL)
+
+	if (root == NULL || node1 == NULL || node2==NULL)
+		return NULL;
+
+	int len1 = Hight(root,node1);
+	int len2 = Hight(root,node2);
+
+
+	for (; len1 > len2; len1--)
+		node1 = node1->_parent;
+	for (; len2 > len1; len2--)
+		node2 = node2->_parent;
+
+	while (node1 && node2 && node1 != node2)
 	{
 		node1 = node1->_parent;
-		temp = node2;
-		while (temp != NULL)
-		{
-			if (node1 == temp->_parent)
-				return node1;
-			temp = temp->_parent;
-		}
+		node2 = node2->_parent;
 	}
+
+	if (node1 == node2)
+		return node1;
+	else
+		return NULL;
 }
+
 void Test()
 {
-	BinaryNode* root = new BinaryNode(1);
+    int n,temp;
+    cin>>n;
+    cin>>temp;
+	BinaryNode* root = new BinaryNode(temp);
 	BinaryNode* cur = root;
 	queue<BinaryNode*> q;
 	BinaryNode* top = NULL;
 	q.push(root);
-	for (int i = 2; i <= 7; i++)
+	for (int i = 2; i <= n; i++)
 	{
 		if (!q.empty())
 		{
 			top = q.front();
+			cin>>temp;
 			if (cur == top->_left)
 			{
-				cur = new BinaryNode(i);
+				cur = new BinaryNode(temp);
 				top->_right = cur;
 				cur->_parent = top;
 				q.pop();
 			}
 			else
 			{
-				cur = new BinaryNode(i);
+				cur = new BinaryNode(temp);
 				top->_left = cur;
 				cur->_parent = top;
 			}
 			q.push(cur);
 		}
 	}
+	cin>>
 	BinaryNode* node1 = root->_left->_left;
-	BinaryNode* node2 = root->_left->_right;
+	BinaryNode* node2 = root->_right->_left;
 	BinaryNode* ancestor = GetLastCommonAncestor(root, node1, node2);
 	if (ancestor)
 		cout << ancestor->_value << endl;
@@ -76,5 +93,6 @@ void Test()
 int main()
 {
     Test();
+    int n;
     return 0;
 }
