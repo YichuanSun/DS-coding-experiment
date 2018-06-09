@@ -1,59 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 int cnt=1;
-struct BinaryNode
+struct BinaryNode       //二叉树节点结构体
 {
 	BinaryNode* _left;
 	BinaryNode* _right;
-	BinaryNode* _parent;
+	//BinaryNode* _parent;        //保存父节点
 	int _value;
-	BinaryNode(const int& value)
-		:_value(value)
-		, _left(NULL)
-		, _right(NULL)
-		, _parent(NULL)
+	BinaryNode(const int& value)        //构造函数
+		:_value(value), _left(NULL), _right(NULL)
 	{}
 };
-int Hight(BinaryNode* root, BinaryNode* node)
-{
-	int len = 0;
-	for (; node != NULL; node = node->_parent)
-		len++;
 
-	return len;
-}
-BinaryNode* GetLastCommonAncestor(BinaryNode* root, BinaryNode* node1, BinaryNode* node2)
+BinaryNode* GetParent(BinaryNode* root, BinaryNode* node1, BinaryNode* node2)
 {
-
-	if (root == NULL || node1 == NULL || node2==NULL)
+	if (root == NULL || node1 == NULL || node2 == NULL)
 		return NULL;
 
-	int len1 = Hight(root,node1);
-	int len2 = Hight(root,node2);
-
-
-	for (; len1 > len2; len1--)
-		node1 = node1->_parent;
-	for (; len2 > len1; len2--)
-		node2 = node2->_parent;
-
-	while (node1 && node2 && node1 != node2)
-	{
-		node1 = node1->_parent;
-		node2 = node2->_parent;
-	}
-
-	if (node1 == node2)
-		return node1;
+	if (node1 == root || node2 == root)
+		return root;
+	BinaryNode* cur = NULL;
+	BinaryNode* left_lca = GetParent(root->_left, node1, node2);
+	BinaryNode* right_lca = GetParent(root->_right, node1, node2);
+	if (left_lca && right_lca)
+		return root;
+	if (left_lca == NULL)
+		return right_lca;
 	else
-		return NULL;
+		return left_lca;
 }
-BinaryNode* binaryTreeSearch(BinaryNode* root,int m)    {
-    if (root==nullptr)  return nullptr;
-    if (root->_value==m)    return root;
-    else cout<<root->_value<<'\t'<<cnt++<<endl;
-    binaryTreeSearch(root->_right,m);
-    binaryTreeSearch(root->_left,m);
+void Search(BinaryNode* p,BinaryNode* &q,int key)       //树节点数据的搜索
+{
+    if(p!=NULL)
+    {
+        if (p->_value==-1)  return;
+        if(p->_value==key)
+            q=p;
+        else
+        {
+            Search(p->_left,q,key);
+            Search(p->_right,q,key);
+        }
+    }
 }
 int main()
 {
@@ -62,7 +50,7 @@ int main()
     cin>>temp;
 	BinaryNode* root = new BinaryNode(temp);
 	BinaryNode* cur = root;
-	queue<BinaryNode*> q;
+	queue<BinaryNode*> q;       //实现树的层序遍历建树
 	BinaryNode* top = NULL;
 	q.push(root);
 	for (int i = 2; i <= n; i++)
@@ -71,29 +59,33 @@ int main()
 		{
 			top = q.front();
 			cin>>temp;
+			if (top->_value==-1)    {
+                q.pop();
+                continue;
+			}
 			if (cur == top->_left)
 			{
 				cur = new BinaryNode(temp);
 				top->_right = cur;
-				cur->_parent = top;
+				//cur->_parent = top;
 				q.pop();
 			}
 			else
 			{
 				cur = new BinaryNode(temp);
 				top->_left = cur;
-				cur->_parent = top;
+				//cur->_parent = top;
 			}
 			q.push(cur);
 		}
 	}
 	int m1,m2;
-	cin>>m1>>m2;
-	BinaryNode* node1 = binaryTreeSearch(root,m1);
-	cout<<endl;
-	BinaryNode* node2 = binaryTreeSearch(root,m2);
-	cout<<"node1 and node2 are"<<node1->_value<<"\t"<<node2->_value;
-    BinaryNode* ancestor = GetLastCommonAncestor(root, node1, node2);
+	cin>>m1>>m2;        //输入目标节点
+	BinaryNode* node1;
+	BinaryNode* node2;
+    Search(root,node1,m1);
+    Search(root,node2,m2);      //返回指向目标节点的指针
+    BinaryNode* ancestor = GetParent(root, node1, node2);
 	if (ancestor)
 		cout << ancestor->_value << endl;
 	else
