@@ -56,7 +56,7 @@ int main()
 	for (int i = 2; i <= n; i++)
 	{
 		if (!q.empty())
-		{
+        {
 			top = q.front();
 			cin>>temp;
 			if (top->_value==-1)    {
