@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1529825405 source:d:\code resourse\ds coding experiment\数据结构编程实验 吴永辉\1.4.1 hangover\main.cpp
+	<iostream>
+	<algorithm>
+	<vector>
+
