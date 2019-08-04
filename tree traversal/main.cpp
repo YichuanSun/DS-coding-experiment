@@ -1,6 +1,4 @@
-#include "stdafx.h"
-#include <iostream>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 //*****************************满二叉树先序、中序和后序之间的转换*****************************begin
@@ -115,7 +113,7 @@ void MidToPost(int post[], int mid[], int midLow, int midHigh, int postLow, int 
 
 //*****************************满二叉树先序、中序和后序之间的转换*****************************end
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
     int Pre[15] = {1, 2, 4, 8, 9, 5, 10, 11, 3, 6, 12, 13, 7, 14, 15};
     int PreChangeToMid[15] = {0};
