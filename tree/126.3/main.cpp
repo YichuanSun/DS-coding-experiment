@@ -9,6 +9,7 @@ struct BiTree{
 stack<BiTree*> bs;
 int n,pre[N],in[N],post[N];
 void postOrderTraversal(BiTree* t);     //非递归实现后序遍历
+void preOrderTraversal(BiTree* T);
 BiTree* preInTree(int pre[],int prel,int prer,int in[],int inl,int inr);    //这是网上的麻烦套路
 BiTree* preInTree2(int pre[],int in[],int n)  { //这是笔记上的我的方法
     if (n<=0)   return nullptr;
@@ -38,6 +39,7 @@ int main()  {
     BiTree* root2=postInTree(post,in,n);
     //postOrderTraversal(root1);
     pt(root2);
+    preOrderTraversal(root2);
     return 0;
 }
 //非递归实现后序遍历
@@ -97,3 +99,18 @@ BiTree* postInTree(int post[],int in[],int n)  {
 //    newnode->rn=buildTree(n-i-1,post+i,inorder+i+1);
 //    return newnode;
 //}
+
+void preOrderTraversal(BiTree* T)    {
+    BiTree* p=T;
+    while (p||!bs.empty())    {
+        if (p)  {
+            printf("%d ",p->data);
+            bs.push(p);
+            p=p->lc;
+        }
+        else {
+            p=bs.top();bs.pop();
+            p=p->rc;
+        }
+    }
+}
