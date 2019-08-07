@@ -7,7 +7,7 @@ struct BiTree{
     BiTree *lc=nullptr,*rc=nullptr;
 };
 stack<BiTree*> bs;
-int n,pre[N],in[N];
+int n,pre[N],in[N],post[N];
 void postOrderTraversal(BiTree* t);     //费递归实现后序遍历
 BiTree* preInTree(int pre[],int prel,int prer,int in[],int inl,int inr);    //这是网上的麻烦套路
 BiTree* preInTree2(int pre[],int in[],int n)  { //这是笔记上的我的方法
@@ -30,13 +30,14 @@ void pt(BiTree* ts) {
 
 int main()  {
     scanf("%d",&n);
-    for (int i=0;i<n;i++)   scanf("%d",&pre[i]);
+    //for (int i=0;i<n;i++)   scanf("%d",&pre[i]);
+    for (int i=0;i<n;i++)   scanf("%d",&post[i]);
     for (int i=0;i<n;i++)   scanf("%d",&in[i]);
     //BiTree* root=preInTree(pre,0,n-1,in,0,n-1);
-    BiTree* root=preInTree2(pre,in,n);
-    postOrderTraversal(root);
-//    cout<<endl;
-//    pt(root);
+    //BiTree* root1=preInTree2(pre,in,n);
+    BiTree* root2=postInTree(post,in,n);
+    //postOrderTraversal(root1);
+    pt(root2);
     return 0;
 }
 //非递归实现后序遍历
@@ -62,7 +63,7 @@ void postOrderTraversal(BiTree* t)   {
         }
     }
 }
-
+//网上找的方法，参数特别多
 BiTree* preInTree(int pre[],int prel,int prer,int in[],int inl,int inr) {
     if (prel>prer)    return nullptr;
     BiTree *nw=new BiTree;
@@ -72,6 +73,17 @@ BiTree* preInTree(int pre[],int prel,int prer,int in[],int inl,int inr) {
     nw->data=pre[prel];
     nw->lc=preInTree(pre,prel+1,prel+i-inl,in,inl,i-1);
     nw->rc=preInTree(pre,prel+i-inl+1,prer,in,i+1,inr);
+    return nw;
+}
+
+BiTree* postInTree(int post[],int in[],int n)  {
+    if (n<=0)   return nullptr;
+    int i=0;
+    while (post[n-1]!=in[i])    i++;
+    BiTree* nw=new BiTree;
+    nw->data=in[i];
+    nw->lc=postInTree(post,in,i);
+    nw->rc=postInTree(post+i,in+i+1,n-i-1);
     return nw;
 }
 
