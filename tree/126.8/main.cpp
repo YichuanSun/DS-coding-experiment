@@ -19,10 +19,28 @@ bt* postInBuildTree(int post[],int in[],int n)  {
 }
 void postOrderTraversal(bt* root)   {
     stack<bt*> bs;
-    bt* p=root;
+    bt *p=root,*r=nullptr;
     while (p||!bs.empty())  {
-
+        if (p)  {
+            bs.push(p);
+            p=p->lc;
+        }
+        else{
+            p=bs.top();
+            if (p->rc&&p->rc!=r)    {
+                p=p->rc;
+                bs.push(p);
+                p=p->lc;
+            }
+            else {
+                bs.pop();
+                printf("%d ",p->data);
+                r=p;
+                p=nullptr;
+            }
+        }
     }
+    printf("\n");
 }
 //第8题，计算度为2的节点数
 int calNodeNum(bt* rt)    {
@@ -42,11 +60,19 @@ void exchangeTree(bt* rt)    {
     while (!qb.empty())  {
         bt* p=qb.front();qb.pop();
         if (p)  {
+            qb.push(p->lc);
+            qb.push(p->rc);
             bt* tp=p->lc;
             p->lc=p->rc;
             p->rc=tp;
         }
     }
+}
+void inOrderTraversal(bt* root)  {
+    if (!root)  return;
+    inOrderTraversal(root->lc);
+    printf("%d ",root->data);
+    inOrderTraversal(root->rc);
 }
 int main()  {
     int n;
@@ -59,5 +85,7 @@ int main()  {
 //    printf("%d\n",ans);
     exchangeTree(root);
     postOrderTraversal(root);
+    inOrderTraversal(root);
+    printf("\n");
     return 0;
 }
