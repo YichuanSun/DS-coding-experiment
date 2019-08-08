@@ -31,15 +31,15 @@ void pt(BiTree* ts) {
 
 int main()  {
     scanf("%d",&n);
-    //for (int i=0;i<n;i++)   scanf("%d",&pre[i]);
-    for (int i=0;i<n;i++)   scanf("%d",&post[i]);
+    for (int i=0;i<n;i++)   scanf("%d",&pre[i]);
+    //for (int i=0;i<n;i++)   scanf("%d",&post[i]);
     for (int i=0;i<n;i++)   scanf("%d",&in[i]);
     //BiTree* root=preInTree(pre,0,n-1,in,0,n-1);
-    //BiTree* root1=preInTree2(pre,in,n);
-    BiTree* root2=postInTree(post,in,n);
-    //postOrderTraversal(root1);
-    pt(root2);
-    preOrderTraversal(root2);
+    BiTree* root1=preInTree2(pre,in,n);
+    //BiTree* root2=postInTree(post,in,n);
+    postOrderTraversal(root1);
+    //pt(root2);
+    //preOrderTraversal(root2);
     return 0;
 }
 //非递归实现后序遍历
@@ -58,7 +58,8 @@ void postOrderTraversal(BiTree* t)   {
                 p=p->lc;
             }
             else {
-                p=bs.top();bs.pop();
+                //p=bs.top();
+                bs.pop();
                 printf("%d ",p->data);
                 r=p;p=nullptr;
             }
