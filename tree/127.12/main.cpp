@@ -46,6 +46,12 @@ void non_Recursion_PostOrderTraversal(bt* root) {
         }
     }
 }
+void postOrderTraversal(bt* root)   {
+    if (!root)  return;
+    postOrderTraversal(root->lc);
+    postOrderTraversal(root->rc);
+    printf("%d ",root->data);
+}
 int main()  {
     int n;
     scanf("%d",&n);
@@ -53,7 +59,8 @@ int main()  {
     for (int i=0;i<n;i++)   scanf("%d",&in[i]);
     scanf("%d",&tar);
     bt* root=preInBuildTree(pre,in,n);
-    non_Recursion_PostOrderTraversal(root);
+    //non_Recursion_PostOrderTraversal(root);
+    postOrderTraversal(root);
     printf("\n");
     return 0;
 }
