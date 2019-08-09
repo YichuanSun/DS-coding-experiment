@@ -7,7 +7,7 @@ typedef struct bt{
     bt *lc,*rc;
 }bt;
 int post[N],in[N];
-bt* postInBuildTree(int in[],int post[],int n)   {
+bt* postInBuildTree(int in[],int post[],int n)   {      //ºóÐòÖÐÐò½¨Ê÷
     if (n<=0)   return nullptr;
     int i=0;
     while (post[n-1]!=in[i])    i++;
