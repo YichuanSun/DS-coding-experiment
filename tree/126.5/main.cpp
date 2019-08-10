@@ -6,7 +6,7 @@ typedef struct bt{
     int data;
     bt *lc,*rc;
 }bt;
-int post[N],in[N];
+int post[N],in[N],cnt=0;
 bt* postInBuildTree(int in[],int post[],int n)   {      //后序中序建树
     if (n<=0)   return nullptr;
     int i=0;
@@ -19,7 +19,7 @@ bt* postInBuildTree(int in[],int post[],int n)   {      //后序中序建树
 }
 int btDepth(bt* T)  {       //顺序队列实现
     if (!T) return 0;
-    int ft=-1,re=-1;
+    int ft=-1,re=-1,ori=-1;
     int last=0,level=0;
     bt *Q[Maxsize];
     Q[++re]=T;      //顺序队列入队:Q[++rear]=T;
@@ -29,6 +29,8 @@ int btDepth(bt* T)  {       //顺序队列实现
         if (p->lc)  Q[++re]=p->lc;
         if (p->rc)  Q[++re]=p->rc;
         if (ft==last)   {
+            cout<<"Round "<<++cnt<<" :\t"<<ft-ori<<endl;     //此时输出的是当前层的节点数
+            ori=ft;
             level++;
             last=re;
         }
@@ -59,8 +61,8 @@ int main()  {
     for (int i=0;i<n;i++)   scanf("%d",&in[i]);
     for (int i=0;i<n;i++)   scanf("%d",&post[i]);
     bt *root=postInBuildTree(in,post,n);
-    //int ans=btDepth(root);
-    int ans=STLbtDepth(root);
+    int ans=btDepth(root);
+    //int ans=STLbtDepth(root);
     printf("%d\n",ans);
     return 0;
 }
