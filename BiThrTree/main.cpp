@@ -5,7 +5,7 @@ using namespace std;
 typedef struct ThreadNode{
     ElemType data;
     struct ThreadNode *lchild,*rchild;
-    int ltag,rtag;
+    int ltag,rtag;      //tag=0，表示指示左/右孩子；tag=1，表示指示前驱/后继
 }ThreadNode,*ThreadTree;
 
 int main()  {
