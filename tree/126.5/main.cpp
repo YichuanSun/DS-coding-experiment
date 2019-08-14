@@ -42,7 +42,7 @@ int STLbtDepth(bt* T)   {   //STL实现迭代实现求树高
     int level=0;
     queue<bt*> qb;
     qb.push(T);
-    bt *last,*ft=T,*re;
+    bt *last=T,*ft,*re;
     while (!qb.empty()) {
         ft=qb.front();qb.pop();
         if (ft->lc)  qb.push(ft->lc);
@@ -61,8 +61,8 @@ int main()  {
     for (int i=0;i<n;i++)   scanf("%d",&in[i]);
     for (int i=0;i<n;i++)   scanf("%d",&post[i]);
     bt *root=postInBuildTree(in,post,n);
-    int ans=btDepth(root);
-    //int ans=STLbtDepth(root);
+    //int ans=btDepth(root);
+    int ans=STLbtDepth(root);
     printf("%d\n",ans);
     return 0;
 }
